@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Form from "./components/Form";
+import Login from "./components/Login";
+import Modal from "./components/Modal";
+import Comments from "./components/Comments";
 
-function App() {
+export default function App() {
+  const [openModal, setOpenModal] = useState(false);
+  const [loginModal, setLoginModal] = useState(true);
+  const [ui, setUi] = useState('login');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <div className="flex flex-col items-center justify-center h-screen w-screen">
+        {ui === 'login' ? <Login setUi={setUi} setOpenModal={setOpenModal} setLoginModal={setLoginModal} /> : <Comments setLoginModal={setLoginModal} setOpenModal={setOpenModal} />}
 
-export default App;
+        <Modal open={openModal} onClose={() => setOpenModal(false)}>
+           <Form type={loginModal ? 'login' : 'signup'} setLoginModal={setLoginModal} setOpenModal={setOpenModal} />
+        </Modal>
+    </div>
+  )
+}
