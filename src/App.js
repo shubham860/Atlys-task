@@ -8,13 +8,18 @@ export default function App() {
   const [openModal, setOpenModal] = useState(false);
   const [loginModal, setLoginModal] = useState(true);
   const [ui, setUi] = useState('login');
+  const commonSetters = { setOpenModal, setLoginModal };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen">
-        {ui === 'login' ? <Login setUi={setUi} setOpenModal={setOpenModal} setLoginModal={setLoginModal} /> : <Comments setLoginModal={setLoginModal} setOpenModal={setOpenModal} />}
+      {
+        ui === 'login' ? <Login setUi={setUi} {...commonSetters} /> :
+          <Comments {...commonSetters} />
+      }
 
-        <Modal open={openModal} onClose={() => setOpenModal(false)}>
-           <Form type={loginModal ? 'login' : 'signup'} setLoginModal={setLoginModal} setOpenModal={setOpenModal} />
-        </Modal>
+      <Modal open={openModal} onClose={() => setOpenModal(false)}>
+        <Form type={loginModal ? 'login' : 'signup'} {...commonSetters} />
+      </Modal>
     </div>
   )
 }
